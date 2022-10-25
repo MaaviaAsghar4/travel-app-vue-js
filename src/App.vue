@@ -51,13 +51,12 @@ import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
 }
 
 .main-container {
-  /* min-height: 300px */
+  overflow: auto;
+  height: calc(100vh - 76px - 69px);
 }
 
 
 .footer-section {
-  position: fixed;
-  bottom: 0px;
   width: 100%;
   background-color: var(--vt-c-black-soft);
   padding: 20px;
