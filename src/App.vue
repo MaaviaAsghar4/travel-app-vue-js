@@ -12,7 +12,7 @@ import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
         </div>
         <div class="navbar-links">
           <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
+          <RouterLink to="/favorites">Favorites</RouterLink>
         </div>
       </nav>
   </header>
@@ -51,11 +51,14 @@ import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
 }
 
 .main-container {
-  min-height: 300px
+  /* min-height: 300px */
 }
 
 
 .footer-section {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
   background-color: var(--vt-c-black-soft);
   padding: 20px;
   text-align: center;
