@@ -57,6 +57,7 @@
     border-radius: 5px;
     box-shadow: 0px 0px 3px var(--vt-c-black-soft);
     cursor: pointer;
+    font-weight: 500;
 }
 
 .destination-images {
