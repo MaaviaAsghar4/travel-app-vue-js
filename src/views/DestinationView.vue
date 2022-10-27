@@ -1,41 +1,69 @@
 <script lang="ts" setup>
-    import data from '@/assets/data.json';
-    import {reactive} from 'vue'
+import data from "@/assets/data.json";
+import { reactive, ref } from "vue";
+import { useRoute, useRouter } from "vue-router" 
+import GoBackIcon from "@/components/Icons/GoBackIcon.vue";
 
-    const destination = reactive(data['destinations'][0])
+interface IDestination {
+    name: string;
+    slug: string;
+    image: string;
+    id: number;
+    description: string;
+    experiences: {
+        name: string;
+        slug: string;
+        image: string;
+        description: string;
+    }[]
+}
+
+const route = useRoute();
+const router = useRouter();
+const slug = ref(route.params.slug);
+const destinationObj = data["destinations"].find((dest) => dest.name.toLowerCase() === slug.value)
+const destination:IDestination  = reactive(destinationObj!);
+
+const goBack= () => {
+  router.go(-1);
+}
 </script>
 
 <template>
-    <div class="destination-view">
-        <h2 class="title">Destination</h2>
-        <div class="destination-description">
-            <div class="main-container">
-                <h4 class="subtitle">{{destination.name}}</h4>
-                <div class="image-container">
-                    <img class="description-main-img" :src="`src/assets/images/${destination.image}`" >
-                </div>
-                
-                
+  <div class="destination-view">
+    <button class="go-back-btn" @click="goBack">
+      <GoBackIcon width="15" height="15" />
+      <span>Go Back</span>
+    </button>
+    <h2 class="title">Destination</h2>
+    <div class="destination-description">
+      <div class="main-container">
+        <h4 class="subtitle">{{ destination.name }}</h4>
+        <div class="image-container">
+          <img class="description-main-img" :src="`src/assets/images/${destination.image}`" >
+        </div>
+            
+            
+        </div>
+        <div class="description-container">
+            <div>
+                <h4 class="subtitle">Description</h4>
+                <p class="description">{{destination.description}}</p>
+                <button class="action-btn" >Remove From Favorites</button>
             </div>
-            <div class="description-container">
-                <div>
-                    <h4 class="subtitle">Description</h4>
-                    <p class="description">{{destination.description}}</p>
-                    <button class="action-btn" >Remove From Favorites</button>
-                </div>
-                <div>
-                    <h4 class="subtitle">Experiences</h4>
-                    <div class="experience-container">
-                        <div v-for="experience in destination.experiences">
-                            <img :src="`src/assets/images/${experience.image}`"  >
-                            <p class="experience-name">{{experience.name}}</p>
-                            <!-- <p>{{experience.description}}</p> -->
-                        </div>
-                    </div> 
-                </div>
+            <div>
+                <h4 class="subtitle">Experiences</h4>
+                <div class="experience-container">
+                    <div v-for="experience in destination.experiences">
+                        <img :src="`src/assets/images/${experience.image}`"  >
+                        <p class="experience-name">{{experience.name}}</p>
+                        <!-- <p>{{experience.description}}</p> -->
+                    </div>
+                </div> 
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style scoped>
@@ -123,11 +151,26 @@
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-weight: 500%;
+    font-weight: 500;
 }
 
 .image-container {
     display: block;
+}
+
+.go-back-btn {
+  border: none;
+  background-color: var(--vt-c-black-soft);
+  color: var(--vt-c-white-soft);
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px var(--vt-c-black-soft);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px
 }
 
 @media screen and (max-width: 992px) {

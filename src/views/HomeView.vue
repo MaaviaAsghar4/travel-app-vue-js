@@ -13,7 +13,7 @@
         <h1 class="title">All Destinations</h1>
         <div class="destination-container">
             <div class="destination" v-for="destination in data['destinations']" :key="destination.id">
-                <RouterLink to="/destination.slug">
+                <RouterLink :to="destination.slug">
                     <h3 class="destination-title">{{destination.name}}</h3>
                     <img class="destination-images" width="200" :src="`src/assets/images/${destination.image}`">
                     <button class="add-to-fav-btn" @click="addToFavorite">Add to Favorite</button> 
