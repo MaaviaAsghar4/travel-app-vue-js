@@ -3,37 +3,35 @@ import data from "@/assets/data.json";
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router" 
 import GoBackIcon from "@/components/Icons/GoBackIcon.vue";
-
-interface IDestination {
-    name: string;
-    slug: string;
-    image: string;
-    id: number;
-    description: string;
-    experiences: {
-        name: string;
-        slug: string;
-        image: string;
-        description: string;
-    }[]
-}
+import type { IDestination } from "@/types";
+import { useFavoritePlaces } from "@/stores/favoritePlaces";
 
 const route = useRoute();
 const router = useRouter();
 const slug = ref(route.params.slug);
 const destinationObj = data["destinations"].find((dest) => dest.name.toLowerCase() === slug.value)
-const destination:IDestination  = reactive(destinationObj!);
+const destination: IDestination  = reactive(destinationObj!);
+const { checkIfPlaceExist, removeFromFavorite, addToFavorite } = useFavoritePlaces();
+
 
 const goBack= () => {
   router.go(-1);
 }
+
+const addOrRemoveFromFav = () => {
+  if (checkIfPlaceExist(destination.id)) {
+    removeFromFavorite(destination.id);
+    return
+  }
+  addToFavorite(destination);
+}
+
 </script>
 
 <template>
   <div class="destination-view">
     <button class="go-back-btn" @click="goBack">
-      <GoBackIcon width="15" height="15" />
-      <span>Go Back</span>
+      <GoBackIcon width="20" height="20" fill="#000"/>
     </button>
     <h2 class="title">Destination</h2>
     <div class="destination-description">
@@ -49,7 +47,7 @@ const goBack= () => {
             <div>
                 <h4 class="subtitle">Description</h4>
                 <p class="description">{{destination.description}}</p>
-                <button class="action-btn" >Remove From Favorites</button>
+                <button class="action-btn" @click="addOrRemoveFromFav" >{{ checkIfPlaceExist(destination.id) ? "Remove From Favorites" : "Add to Favorites"}}</button>
             </div>
             <div>
                 <h4 class="subtitle">Experiences</h4>
@@ -160,17 +158,15 @@ const goBack= () => {
 
 .go-back-btn {
   border: none;
-  background-color: var(--vt-c-black-soft);
-  color: var(--vt-c-white-soft);
-  padding: 10px 15px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 3px var(--vt-c-black-soft);
+  background-color: transparent;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px
+}
+
+.go-back-btn:hover {
+  background-color: var(--vt-c-text-dark-2);
+  box-shadow: 0px 0px 3px var(--vt-c-black-soft);
+  border-radius: 5px;
+
 }
 
 @media screen and (max-width: 992px) {

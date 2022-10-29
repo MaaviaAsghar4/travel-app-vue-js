@@ -1,11 +1,16 @@
 <script lang="ts" setup>
-    import data from '@/assets/data.json';
-    import { RouterLink } from 'vue-router';
+import data from '@/assets/data.json';
+import { RouterLink } from 'vue-router';
+import { useFavoritePlaces } from "@/stores/favoritePlaces";
+import type { IDestination } from "@/types";
 
-    const addToFavorite = (e: Event) => {
-        e.preventDefault();
-        console.log('hello');
-    }
+const { addToFavorite, checkIfPlaceExist} = useFavoritePlaces();
+
+const addToFavorites = (e: Event, destination: IDestination) => {
+    e.preventDefault();
+    addToFavorite(destination);
+}
+
 </script>
 
 <template>
@@ -16,7 +21,7 @@
                 <RouterLink :to="destination.slug">
                     <h3 class="destination-title">{{destination.name}}</h3>
                     <img class="destination-images" width="200" :src="`src/assets/images/${destination.image}`">
-                    <button class="add-to-fav-btn" @click="addToFavorite">Add to Favorite</button> 
+                    <button class="add-to-fav-btn" @click="(e) => addToFavorites(e, destination)">{{ checkIfPlaceExist(destination.id) ? "Added to Favorite" : "Add to Favorite"}}</button> 
                 </RouterLink>
             </div>
         </div>

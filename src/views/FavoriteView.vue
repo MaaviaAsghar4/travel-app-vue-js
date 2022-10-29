@@ -1,22 +1,25 @@
 <script lang="ts" setup>
-    import data from '@/assets/data.json';
-    import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';
+import { useFavoritePlaces } from "@/stores/favoritePlaces";
 
-    const addToFavorite = (e: Event) => {
-        e.preventDefault();
-        console.log('hello');
-    }
+const {favoritePlace, removeFromFavorite} = useFavoritePlaces();
+
+const removeFromFavorites = (e: Event, id: number) => {
+    e.preventDefault();
+    removeFromFavorite(id);
+}
 </script>
 
 <template>
     <div class="home-view-container">
         <h1 class="title">Favorites</h1>
         <div class="destination-container">
-            <div class="destination" v-for="destination in data['destinations']" :key="destination.id">
+            <h3 v-if="!favoritePlace.length">Try adding favorite from <RouterLink to="/">here</RouterLink></h3>
+            <div class="destination" v-for="destination in favoritePlace" :key="destination.id">
                 <RouterLink to="/destination.slug">
                     <h3 class="destination-title">{{destination.name}}</h3>
                     <img class="destination-images" width="200" :src="`src/assets/images/${destination.image}`">
-                    <button class="add-to-fav-btn" @click="addToFavorite">Add to Favorite</button> 
+                    <button class="add-to-fav-btn" @click="(e) => removeFromFavorites(e, destination.id)">Remove From Favorite</button> 
                 </RouterLink>
             </div>
         </div>
