@@ -14,7 +14,7 @@ export const useFavoritePlaces = defineStore("favoritePlaces", () => {
   }
 
   function removeFromFavorite(id: number) {
-    let index = favoritePlace.value.findIndex((value) => value.id === id);
+    const index = favoritePlace.value.findIndex((value) => value.id === id);
     if (!isNaN(index)) {
       favoritePlace.value.splice(index, 1);
     }

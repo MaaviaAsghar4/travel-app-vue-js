@@ -1,32 +1,30 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
-
+import { RouterLink, RouterView } from "vue-router";
+import NavbarLogo from "@/components/Icons/NavbarLogo.vue";
 </script>
 
 <template>
   <header>
-      <nav class="navbar-section">
-        <div class="navbar-logo">
-          <RouterLink to="/"><NavbarLogo /></RouterLink>
-        </div>
-        <div class="navbar-links">
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/favorites">Favorites</RouterLink>
-        </div>
-      </nav>
+    <nav class="navbar-section">
+      <div class="navbar-logo">
+        <RouterLink to="/"><NavbarLogo /></RouterLink>
+      </div>
+      <div class="navbar-links">
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/favorites">Favorites</RouterLink>
+      </div>
+    </nav>
   </header>
 
-  <div class="main-container" >
+  <div class="main-container">
     <RouterView />
   </div>
 
   <footer>
     <div class="footer-section">
-      <p class="footer-tag-line" >See the world with your own two eyes...</p>
+      <p class="footer-tag-line">See the world with your own two eyes...</p>
     </div>
   </footer>
-
 </template>
 
 <style scoped>
@@ -55,7 +53,6 @@ import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
   height: calc(100vh - 76px - 69px);
 }
 
-
 .footer-section {
   width: 100%;
   background-color: var(--vt-c-black-soft);
@@ -66,7 +63,6 @@ import NavbarLogo from '@/components/Icons/NavbarLogo.vue';
 .footer-tag-line {
   font-size: 18px;
   font-weight: bold;
-  color: var(--vt-c-white-soft)
+  color: var(--vt-c-white-soft);
 }
-
 </style>
